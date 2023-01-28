@@ -1,0 +1,63 @@
+{% extends "views/base.html" %}
+{% load static %}
+
+{% block title %}Profile{% endblock %}
+
+{% block header_import %}
+<script defer="defer" src="{% static 'js/build/static/js/app.js'%}"></script>
+<link href="{% static 'js/build/static/css/app.css' %}" rel="stylesheet">
+<link href="{% static 'css/profile.css' %}" rel="stylesheet">
+
+{% endblock %}
+{% block feed %}
+{% load static %}
+<div class="profile-header">
+  <div class="banner">
+    <img src="/banners/{{ current_profile }}">
+    <div class="header-photo">
+      <img src="/profile/media/{{ current_profile }}" class="profile-photo">
+    </div>
+  </div>
+</div>
+
+<div class="profile-description centerwrapper">
+  <div class="user-data">
+    <span class="fullname">{{fullname}}</span>
+    <span class="username">@{{username}}</span>
+  </div>
+  <div class="Publication-count profile-description-counters">
+    <span class="number"> 10 </span> <span>publicaciones</span>
+  </div>
+  <div class="follower-count profile-description-counters">
+    <span class="number">100</span> <span>seguidores</span>
+  </div>
+  <div class="description">
+  I am a Ph.D. doctor and Academic Advisor interested in spreading scholarship postdoctoral positions faculty positions and research  information worldwide
+</div>
+</div>
+
+<div class="profile-options">
+  <div class='centerwrapper'>
+    <a class="profile-options-link" href="/{{current_profile}}/">
+      <div class="option">
+        Principal
+      </div>
+    </a>
+    <a class="profile-options-link" href="/{{current_profile}}/gallery/">
+      <div class="option">
+       <span class="material-symbols-outlined">
+gallery_thumbnail
+</span> Galería
+      </div>
+    </a>
+  </div>
+</div>
+<div>
+  <div id="root"></div>
+</div>
+{% endblock %}
+{% block app-js %}
+<!-- <script type="text/babel"  src="{% static '/js/feed-app.js' %}"></script> -->{% endblock %}
+
+
+

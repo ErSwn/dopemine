@@ -1,0 +1,31 @@
+{% extends "views/base.html" %}
+{% load static %}
+
+{% block title %}Profile{% endblock %}
+
+{% block header_import %}
+<script defer="defer" src="{% static 'js/build/static/js/app.js'%}"></script>
+<link href="{% static 'js/build/static/css/app.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block feed %}
+    <!-- -->
+      <div class="publicate-container">
+      <form enctype="multipart/form-data" action="todo/publish/" method="post">
+        {% csrf_token %}
+          <textarea class="publicate-input" name = "description"></textarea><br><br>
+          <input type="file" accept="image/*" name="file" multiple>
+        <input type="submit">
+      </form>
+    </div>
+        <div>
+        <p>Publications ({{number_of_items}})</p>
+        <div id="root"></div>
+      </div>
+
+{% endblock %}
+{% block app-js %}
+<!-- <script type="text/babel"  src="{% static '/js/feed-app.js' %}"></script> -->{% endblock %}
+
+
+
