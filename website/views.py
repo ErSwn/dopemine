@@ -39,9 +39,12 @@ def get_user(request):
 		user = request.user
 	else:
 		user = User.objects.get(username = 'edua009')
+		
 	return user
+
 @ensure_csrf_cookie
 def ProfileView(request, profile):
+	''' Defines the '''
 	user 			 = User.objects.get(username=profile)
 	full_name 		 = UserData.objects.get(user = user).fullname
 	profile_username = user.username
@@ -67,7 +70,7 @@ def GalleryView(request, username):
 	fullname 			= UserData.objects.get(user = user).fullname
 	profile_username 	= user.username
 
-	data ={
+	data = {
 		"current_profile":	user, 
 		"fullname":			fullname,
 		"username":			profile_username
@@ -85,16 +88,17 @@ def saved_view(request):
 @require_POST
 @csrf_protect
 def MakeLike(request):
-	data 		= json.loads(request.body.decode('utf-8'))
-	post_id 	= data['id']
-	value 		= data['value']
-	user 		= get_user(request)
+	data 	= json.loads(request.body.decode('utf-8'))
+	post_id = data['id']
+	value 	= data['value']
+	user 	= get_user(request)
 
 	if not value:
 		PostLike.objects.filter(user = user, post_id = post_id).delete()
 	else:
 		post = Publication.objects.get(id=post_id)
 		PostLike.objects.update_or_create(user=user, post_id=post)
+
 	return HttpResponse(True)
 
 @require_POST
@@ -107,6 +111,7 @@ def PostComment(request):
 	post 	= Publication.objects.get(id = post_id)
 
 	Comment.objects.create(author=user, post_id=post, content =  content)
+
 	return HttpResponse(True)
 
 
@@ -129,7 +134,7 @@ def upload_images(user, images):
 		keys.append(key)
 	return keys
 
-@login_required(login_url='members/login')
+@login_required(login_url='accounts/login')
 def CreatePublication(request):
 	if request.method == 'POST':
 		description = request.POST['description']
@@ -140,13 +145,13 @@ def CreatePublication(request):
 	return redirect('home')
 
 @require_POST
-@login_required(login_url='members/login')
+@login_required(login_url='accounts/login')
 def DeletePublication(request):
 	Publication.objects.filter(id=request.POST['id'],  owner = request.user).delete()	
 	return redirect('home')
 
 @require_POST
-@login_required(login_url='members/login')
+@login_required(login_url='accounts/login')
 def post_comment(request):
 	comment = Comment.objects.create(
 		author 	= request.user,

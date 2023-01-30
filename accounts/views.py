@@ -51,7 +51,7 @@ def register_user(request):
 		data = UserData.objects.create(user = user, fullname =fullname )
 		UserMedia.objects.create(user = user )
 
-		return redirect('register')
+		return redirect('login')
 
 	else:
 

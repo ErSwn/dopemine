@@ -4,22 +4,81 @@
 {% block title %}Profile{% endblock %}
 
 {% block header_import %}
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 <script defer="defer" src="{% static 'js/build/static/js/app.js'%}"></script>
 <link href="{% static 'js/build/static/css/app.css' %}" rel="stylesheet">
+<script>
+  $(document).on('change', '.file-input', function() {
+
+
+      var filesCount = $(this)[0].files.length;
+
+      var textbox = $(this).prev();
+
+      if (filesCount === 1) {
+      var fileName = $(this).val().split('\\').pop();
+      textbox.text(fileName);
+      } else {
+      textbox.text(filesCount + ' files selected');
+      }
+
+
+
+      if (typeof (FileReader) != "undefined") {
+        var dvPreview = $("#divImageMediaPreview");
+        dvPreview.html("");            
+        $($(this)[0].files).each(function () {
+            var file = $(this);                
+                var reader = new FileReader();
+                reader.onload = function (e) {
+
+                    var img = $("<img />");
+                    var t=$("<div class = 'previewImage'/>");
+
+                    img.attr("style", "width: 100px; height:100px; object-fit: cover");
+                    img.attr("src", e.target.result);
+
+                    
+                    t.append(img)
+                    dvPreview.append(t);
+                }
+
+                reader.readAsDataURL(file[0]);                
+        });
+    } else {
+        alert("This browser does not support HTML5 FileReader.");
+    }
+
+
+      });
+
+</script>
 {% endblock %}
 
 {% block feed %}
     <!-- -->
-      <div class="publicate-container">
-      <form enctype="multipart/form-data" action="todo/publish/" method="post">
-        {% csrf_token %}
-          <textarea class="publicate-input" name = "description"></textarea><br><br>
-          <input type="file" accept="image/*" name="file" multiple>
-        <input type="submit">
+      <div class="makePublication-container">
+        <form enctype="multipart/form-data" action="todo/publish/" method="post">
+          {% csrf_token %}
+          <textarea placeholder="Escribe lo que piensas..." class="publicate-input" name = "description"></textarea><br><br>
+          <input class="submit-button" type="submit">
+          <!-- <input type="file" accept="image/*" name="file" multiple> -->
+          <div class="publicate-media-input">
+            <span class="choose-file-button"><span class="material-symbols-outlined">
+add_photo_alternate
+</span></span>
+            <span class="file-message"></span>
+            <input name="file" type="file" class="file-input" accept=".jfif,.jpg,.jpeg,.png,.gif" multiple>
+
+            <div class="file-drop-area">
+            </div>
+            <div id="divImageMediaPreview">
+            </div>
+          </div>
       </form>
     </div>
         <div>
-        <p>Publications ({{number_of_items}})</p>
+        <!-- <p>Publications ({{number_of_items}})</p> -->
         <div id="root"></div>
       </div>
 

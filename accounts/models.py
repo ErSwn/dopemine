@@ -5,7 +5,7 @@ from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import AbstractUser, UserManager
 from django.contrib.auth.models import User
 
-class UserData(models.Model):
+class UserData(models.Model): 
 	user = models.OneToOneField(User, unique=True, on_delete=models.CASCADE, primary_key=True)
 	fullname = models.CharField(max_length=100)
 	profile_photo = models.ImageField(upload_to='profile_photos/',
@@ -13,7 +13,7 @@ class UserData(models.Model):
 	banner = models.ImageField( upload_to="banners/",
 								default = "banners/default.jpg")
 	description = models.CharField(max_length=499,
-		default='''#CS Assoc. Prof 3 Social Media Co-chair''')
+		default='''No profile description''')
 	class Meta:
 		indexes = [
 			models.Index(fields = ['user'])

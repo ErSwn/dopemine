@@ -20,6 +20,7 @@ def BannerMedia(request, username):
 
 def Media(request, file):
 	img = Image.objects.get(identifier=file)
+	
 	return FileResponse(img.image)
 
 

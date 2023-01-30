@@ -33,13 +33,9 @@ class PublicationSerializer(serializers.ModelSerializer):
         return PostLike.objects.filter(post_id = instance.id ).count()
 
     def get_liked_by_user(self, instance):
-        if self_origin:
-            user = self.context['request'].user
-        else:
-            username = 'edua009'
-            user = User.objects.get( username = username )
-
+        user = user = self.context['request'].user
         return PostLike.objects.filter(user=user, post_id = instance).exists()
+    
     def get_comment_count(self, instance):
         return Comment.objects.filter(post_id = instance.id ).count()
 
