@@ -14,7 +14,7 @@ class UserMedia(models.Model):
 
 	profile_photo 	= models.ImageField(
 								upload_to ='profile_photos/',
-								default ='profile_photos/default/default.pnh' )
+								default ='profile_photos/default/default.png' )
 
 	banner  		= models.ImageField( upload_to="banners/",
 								default = "banners/default.jpg")

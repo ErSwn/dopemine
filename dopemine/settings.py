@@ -86,17 +86,25 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'dopemine.wsgi.application'
 
+# DATABASES = {
+
+#     'default': {
+
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'dives',
+#         'USER': 'postgres',
+#         'PASSWORD': '123',
+#         'HOST': 'localhost',
+#         'PORT': ''
+
+#     }
+# }
+
+PROJECT_DIR = os.path.abspath(os.path.dirname(__file__))
 DATABASES = {
-
     'default': {
-
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'dives',
-        'USER': 'postgres',
-        'PASSWORD': '123',
-        'HOST': 'localhost',
-        'PORT': ''
-
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(PROJECT_DIR, 'yourdatabasename.db'),
     }
 }
 
@@ -165,15 +173,13 @@ MEDIA_ROOT = 'media/'
 CSRF_TRUSTED_ORIGINS = ['http://localhost:3000', 'http://127.0.0.1:8000']
 
 CSRF_COOKIE_SECURE = True
-from corsheaders.defaults import default_headers
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
-CSRF_COOKIE_SECURE = True
 
 """ IMPORTANTE """
 # CSRF_HEADER_NAME = "HTTP_X_CSRFTOKEN"
+# CSRF_COOKIE_NAME = "csrftoken"
 
-CSRF_COOKIE_NAME = "csrftoken"
 CORS_ALLOW_HEADERS = (
     'x-requested-with',
     'content-type',

@@ -41,6 +41,6 @@ class CommentLike(models.Model):
 		unique_together = (('user', 'post_id'))
 		indexes = [models.Index(fields = ['user', 'post_id'])]
 
-class Bookmark(models.Model):
-	user 	= models.ForeignKey(User, primary_key=True on_delete = models.CASCADE)
-	post_id = models.ForeignKey(Publication, on_delete = models.CASCADE)
+# class Bookmark(models.Model):
+# 	user 	= models.ForeignKey(User, primary_key=True ,on_delete = models.CASCADE)
+# 	post_id = models.ForeignKey(Publication, on_delete = models.CASCADE)
