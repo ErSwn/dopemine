@@ -1,0 +1,13 @@
+.login-form{
+	width:80%;
+	height: auto;
+
+	max-width:350px;
+	margin:auto auto;
+	margin-top:100px;
+
+}
+.btn-floating{
+	/*text-align:center;*/
+	padding:0px;
+}

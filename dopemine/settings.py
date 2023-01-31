@@ -34,6 +34,9 @@ ALLOWED_HOSTS = ['localhost', '127.0.0.1', '*']
 # Application definition
 
 INSTALLED_APPS = [
+
+    'firebase_auth',
+    # 'sslserver',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -41,7 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'djoser',
-        'rest_framework.authtoken',
+    'rest_framework.authtoken',
     'rest_framework',
     'corsheaders',
     'accounts',
@@ -161,7 +164,7 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.TokenAuthentication',
-    ],
+    ],  'firebase_auth.authentication.FirebaseAuthentication'
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
     ]

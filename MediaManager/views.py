@@ -8,19 +8,18 @@ from .models import Image, UserMedia
 # Create your views here.
 def ProfileMedia(request, username):
 	user_key 	= User.objects.get(username=username)
-	profileMedia=  UserMedia.objects.get(user=user_key)
+	user_media=  UserMedia.objects.get(user=user_key)
 
-	return FileResponse(profileMedia.profile_photo)
+	return FileResponse(user_media.profile_photo)
 
 def BannerMedia(request, username):
 	user_key 	= User.objects.get(username=username)
-	data 		=  UserData.objects.get(user=user_key)
+	user_media 		=  UserData.objects.get(user=user_key)
 
-	return FileResponse(data.banner)
+	return FileResponse(user_media.banner)
 
 def Media(request, file):
 	img = Image.objects.get(identifier=file)
-	
 	return FileResponse(img.image)
 
 
