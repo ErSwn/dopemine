@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.contrib import messages
 from django.contrib.auth.models import User
 from .forms import RegisterForm
@@ -13,19 +13,15 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 
 def login_user(request):
-	print(request.body.decode('utf-8'))
 	if request.method == 'POST':
 		username = request.POST['username']
 		password = request.POST['password']
-		print(username)
 		user = authenticate(username = username, password=password)
 		
 		if user is not None:
-			print('Sesion iniciada')
 			login(request, user)
 			return redirect('home')
 		else:
-			print('Authentication failed')
 			messages.success(request, ('There was an error while login, try again' ))
 			return redirect('login')
 	else:
@@ -43,6 +39,8 @@ def register_user(request):
 			messages.error(request, "Password doesnt match")
 
 		#user registration
+		if User.objects.filter(username = username).exists():
+			return HttpResponse(404)
 		user = User.objects.create( username = username, email = email )
 		user.set_password(password)
 		user.save()
@@ -51,7 +49,8 @@ def register_user(request):
 		data = UserData.objects.create(user = user, fullname =fullname )
 		UserMedia.objects.create(user = user )
 
-		return redirect('login')
+		login(request, user)
+		return redirect('home')
 
 	else:
 
@@ -67,16 +66,26 @@ def logout_request(request):
 def home(request):
 	return render(request, 'accounts/home.html')
 
-class user_info(viewsets.ModelViewSet):
-	authentication_classes = [TokenAuthentication]
-	permission_classes = [IsAuthenticated]
+# class user_info(viewsets.ModelViewSet):
+# 	authentication_classes = [TokenAuthentication]
+# 	permission_classes = [IsAuthenticated]
 
-	def get_serializer_class(self):
-		return UserInfoSerializer
-	def get_queryset(self):
+# 	def get_serializer_class(self):
+# 		return UserInfoSerializer
+# 	def get_queryset(self):
 
-		username = self.request.query_params['username']
-		user = User.objects.get(username=username)
-		# print(UserData.objects.get(user=user).fullname) 
-		info = UserData.objects.filter(user=user)
-		return info
+# 		username = self.request.query_params['username']
+# 		user = User.objects.get(username=username)
+# 		# print(UserData.objects.get(user=user).fullname) 
+# 		info = UserData.objects.filter(user=user)
+# 		return info
+
+def checkUsername(request):
+	username = request.GET.get('username')
+	print(username)
+	# checks if a username aleady exist
+	user = User.objects.filter(username = username)
+	print(user.exists())
+	return JsonResponse({'exists':user.exists()})
+
+

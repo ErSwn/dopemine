@@ -32,6 +32,31 @@ from datetime import datetime
 
 
 """ API posts """
+class PublicationPaginator(viewsets.ModelViewSet): 
+	def get_serializer_class(self):
+		return PublicationSerializer
+	def get_queryset(self):
+		page 		= int(self.request.query_params['pagination'])
+		page_size 	= 12
+		origin 		= self.request.META['HTTP_REFERER']
+		user 		= urlparse(origin).path.split('/')[1]
+
+		if user == '':
+			query_object = Publication.objects.all()
+		else:
+			owner 		 = User.objects.get(username=user)
+			query_object = Publication.objects.filter(owner=owner)
+			
+		paginator = Paginator(
+						query_object.order_by('-id'),
+						page_size )
+
+		if page >= paginator.num_pages:
+			return []
+
+		response = paginator.page(page+1)
+		return response
+
 
 @api_view(['POST'])
 @action(detail=False, methods=['post'])
@@ -123,29 +148,4 @@ def checkToken(request):
 def token_security(request):
 	return JsonResponse({'csrfToken': get_token(request)})
 
-
-class PublicationPaginator(viewsets.ModelViewSet): 
-	def get_serializer_class(self):
-		return PublicationSerializer
-	def get_queryset(self):
-		page 		= int(self.request.query_params['pagination'])
-		page_size 	= 12
-		origin 		= self.request.META['HTTP_REFERER']
-		user 		= urlparse(origin).path.split('/')[1]
-
-		if user == '':
-			query_object = Publication.objects.all()
-		else:
-			owner 		 = User.objects.get(username=user)
-			query_object = Publication.objects.filter(owner=owner)
-			
-		paginator = Paginator(
-						query_object.order_by('-id'),
-						page_size )
-
-		if page >= paginator.num_pages:
-			return []
-
-		response = paginator.page(page+1)
-		return response
 

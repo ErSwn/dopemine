@@ -46,13 +46,18 @@ def get_user(request):
 def ProfileView(request, profile):
 	''' Defines the '''
 	user 			 = User.objects.get(username=profile)
-	full_name 		 = UserData.objects.get(user = user).fullname
+	user_data = UserData.objects.get(user = user)
+
+	full_name 		 = user_data.fullname
+	user_description = user_data.description
 	profile_username = user.username
+
 
 	data = {
 		"current_profile":	profile,
 		"fullname":			full_name,
-		"username":			profile_username
+		"username":			profile_username,
+		"user_description": user_description
 	}
 
 	return render(request, 'views/profile.html', data)
