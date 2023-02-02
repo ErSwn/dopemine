@@ -1,4 +1,6 @@
 /media/*
+/media/uploads/*
+
 !*/media/banners/default.jpg
 !*/media/profile_photos/default.jpg
 !*/media/profile_photos/default.png
