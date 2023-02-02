@@ -1,5 +1,5 @@
-media/*
-!media/banners/default.jpg
-!media/profile_photos/default.jpg
-!media/profile_photos/default.png
+/media/*
+!*/media/banners/default.jpg
+!*/media/profile_photos/default.jpg
+!*/media/profile_photos/default.png
 
