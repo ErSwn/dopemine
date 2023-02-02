@@ -181,7 +181,7 @@ CORS_ALLOW_CREDENTIALS = True
 
 """ IMPORTANTE """
 CSRF_HEADER_NAME = "HTTP_X-CSRFToken"
-CSRF_COOKIE_NAME = "csrftoken"
+CSRF_COOKIE_NAME = "X-CSRFToken"
 
 CORS_ALLOW_HEADERS = (
     'x-requested-with',
