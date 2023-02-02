@@ -36,6 +36,8 @@ from tqdm import tqdm
 from urllib.parse import urlparse
 from datetime import datetime
 
+
+
 def get_user(request):
 	# Disable login requirement for development enviroment
 	# returns 'edua009' user
@@ -77,6 +79,9 @@ def ProfileView(request, profile):
 	}
 
 	return render(request, 'views/profile.html', data)
+
+def book_marks(request):
+	return redirect('home')
 
 @login_required(login_url='accounts/login')
 def home_page(request):
