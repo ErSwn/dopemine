@@ -28,19 +28,18 @@ src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.1.0/mdb.min.js"
 checkUsername = (input) => {
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
-    console.log(this.responseText)
     
     if (this.readyState == 4 && this.status == 200) {
       response = JSON.parse(this.responseText);
       if(response['exists']){
-      input.style.borderBottom = "1px solid red";
-      document.getElementById('error-user-validation').style.display = "block";
-    } else {
-      input.style.borderBottom = "none";
-      document.getElementById('error-user-validation').style.display = "none";
+        input.style.borderBottom = "1px solid red";
+        document.getElementById('error-user-validation').style.display = "block";
+      } else {
+        input.style.borderBottom = "none";
+        document.getElementById('error-user-validation').style.display = "none";
+      }
     }
-    }
-    };
+  };
   xhttp.open("GET", "checkusername?username="+input.value);
   xhttp.send("");
 

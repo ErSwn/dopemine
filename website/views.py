@@ -8,11 +8,17 @@ from django.http.response import HttpResponse
 from django.middleware.csrf import get_token
 from django.views.decorators.csrf import ensure_csrf_cookie, csrf_protect, csrf_exempt
 from django.views.decorators.http import require_POST
+from django_ratelimit.decorators import ratelimit
 
 from accounts.models import UserData
+
 from posts.models import Publication, PostLike, Comment, CommentLike
 from posts.serializers import PublicationSerializer, CommentSerializer
+
 from MediaManager.models import Image
+
+from relations.models import Follow
+
 from rest_framework import viewsets
 from rest_framework.decorators import api_view, authentication_classes,permission_classes, action
 from rest_framework.response import Response
@@ -20,6 +26,7 @@ from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication, TokenAuthentication
 
+import django
 import json
 import uuid
 import random
@@ -28,7 +35,6 @@ from random import randint
 from tqdm import tqdm
 from urllib.parse import urlparse
 from datetime import datetime
-
 
 def get_user(request):
 	# Disable login requirement for development enviroment
@@ -43,21 +49,31 @@ def get_user(request):
 	return user
 
 @ensure_csrf_cookie
+@ratelimit(key='ip', rate='60/m')
 def ProfileView(request, profile):
-	''' Defines the '''
-	user 			 = User.objects.get(username=profile)
+	user = None
+	try:
+		user 			 = User.objects.get(username=profile)
+	except:
+		return redirect('home')
 	user_data = UserData.objects.get(user = user)
 
 	full_name 		 = user_data.fullname
 	user_description = user_data.description
 	profile_username = user.username
 
+	follow_count = Follow.objects.filter( follow = user ).count()
+	publication_count = Publication.objects.filter(owner = user ).count()
+
+
 
 	data = {
 		"current_profile":	profile,
 		"fullname":			full_name,
 		"username":			profile_username,
-		"user_description": user_description
+		"user_description": user_description,
+		"follow_count":		follow_count,
+		"publication_count":publication_count,
 	}
 
 	return render(request, 'views/profile.html', data)
@@ -69,16 +85,28 @@ def home_page(request):
 	}
 
 	return render(request, 'views/home.html', data)
+
 @ensure_csrf_cookie
+@ratelimit(key='ip', rate='100/m')
 def GalleryView(request, username):
-	user 				= User.objects.get(username=username)
-	fullname 			= UserData.objects.get(user = user).fullname
-	profile_username 	= user.username
+	user 			 = User.objects.get(username=username)
+	user_data = UserData.objects.get(user = user)
+
+	full_name 		 = user_data.fullname
+	user_description = user_data.description
+	profile_username = user.username
+
+	follow_count = Follow.objects.filter( follow = user ).count()
+	publication_count = Publication.objects.filter(owner = user ).count()
+
 
 	data = {
-		"current_profile":	user, 
-		"fullname":			fullname,
-		"username":			profile_username
+		"current_profile":	username,
+		"fullname":			full_name,
+		"username":			profile_username,
+		"user_description": user_description,
+		"follow_count":		follow_count,
+		"publication_count":publication_count
 	}
 
 	return render(request, 'views/gallery.html', data)

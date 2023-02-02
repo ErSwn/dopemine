@@ -16,7 +16,4 @@ urlpatterns = [
     path('user/test/900/', obtain_auth_token),
     path('api/', include(router.urls)),
     path('check/test', views.checkToken),
-    # path('api/like', views.handleLike)
-    # path('actions/like/', views.MakeLike),
-
 ]

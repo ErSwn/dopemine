@@ -13,6 +13,10 @@ from accounts.models import UserData
 from posts.models import Publication, PostLike, Comment
 from posts.serializers import PublicationSerializer, CommentSerializer
 
+from relations.models import Follow
+from relations.serializers import FollowSerializer
+
+
 from rest_framework import viewsets
 from rest_framework.decorators import api_view, authentication_classes,permission_classes, action
 from rest_framework.response import Response
@@ -101,8 +105,8 @@ class user_info(viewsets.ModelViewSet):
 		return UserInfoSerializer
 	def get_queryset(self):
 		username = self.request.query_params['username']
-		user = User.objects.get(username=username)
-		info = UserData.objects.filter(user=user)
+		user 	 = User.objects.get(username=username)
+		info 	 = UserData.objects.filter(user=user)
 		return info
 
 class PostApiView(viewsets.ModelViewSet):
@@ -116,8 +120,8 @@ class PostApiView(viewsets.ModelViewSet):
 		page 		= int(self.request.query_params['page'])
 
 		if self.request.query_params['where'] == 'profile' :
-			user = self.request.query_params['user']
-			owner = User.objects.get(username=user)
+			user 	= self.request.query_params['user']
+			owner 	= User.objects.get(username=user)
 			
 			if owner:
 				query_object = Publication.objects.filter(owner=owner)

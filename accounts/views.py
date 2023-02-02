@@ -66,20 +66,6 @@ def logout_request(request):
 def home(request):
 	return render(request, 'accounts/home.html')
 
-# class user_info(viewsets.ModelViewSet):
-# 	authentication_classes = [TokenAuthentication]
-# 	permission_classes = [IsAuthenticated]
-
-# 	def get_serializer_class(self):
-# 		return UserInfoSerializer
-# 	def get_queryset(self):
-
-# 		username = self.request.query_params['username']
-# 		user = User.objects.get(username=username)
-# 		# print(UserData.objects.get(user=user).fullname) 
-# 		info = UserData.objects.filter(user=user)
-# 		return info
-
 def checkUsername(request):
 	username = request.GET.get('username')
 	print(username)
