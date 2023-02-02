@@ -67,8 +67,6 @@ def ProfileView(request, profile):
 	follow_count = Follow.objects.filter( follow = user ).count()
 	publication_count = Publication.objects.filter(owner = user ).count()
 
-
-
 	data = {
 		"current_profile":	profile,
 		"fullname":			full_name,
