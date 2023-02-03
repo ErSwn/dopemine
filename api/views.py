@@ -34,6 +34,19 @@ from urllib.parse import urlparse
 from datetime import datetime
 
 
+def get_user(request):
+	# Disable login requirement for development enviroment
+	# returns 'edua009' user
+	self_origin = True
+
+	if self_origin:
+		user = request.user
+	else:
+		user = User.objects.get(username = '123')
+	print(user)
+	return user
+
+
 
 """ API posts """
 class PublicationPaginator(viewsets.ModelViewSet): 
@@ -42,15 +55,16 @@ class PublicationPaginator(viewsets.ModelViewSet):
 	def get_queryset(self):
 		page 		= int(self.request.query_params['pagination'])
 		page_size 	= 12
+		user = self.request.query_params.get('user')
 		origin 		= self.request.META['HTTP_REFERER']
 		user 		= urlparse(origin).path.split('/')[1]
-
+		
 		if user == '':
 			query_object = Publication.objects.all()
 		else:
-			owner 		 = User.objects.get(username=user)
-			query_object = Publication.objects.filter(owner=owner)
-			
+			owner = User.objects.get(username=user)
+			query_object = Publication.objects.filter(owner = owner)
+		
 		paginator = Paginator(
 						query_object.order_by('-id'),
 						page_size )
@@ -60,6 +74,7 @@ class PublicationPaginator(viewsets.ModelViewSet):
 
 		response = paginator.page(page+1)
 		return response
+		return None
 
 
 @api_view(['POST'])
@@ -118,7 +133,6 @@ class PostApiView(viewsets.ModelViewSet):
 	def get_queryset(self):
 		page_size 	= 12
 		page 		= int(self.request.query_params['page'])
-
 		if self.request.query_params['where'] == 'profile' :
 			user 	= self.request.query_params['user']
 			owner 	= User.objects.get(username=user)
@@ -152,4 +166,7 @@ def checkToken(request):
 def token_security(request):
 	return JsonResponse({'csrfToken': get_token(request)})
 
+@csrf_protect
+def checkcsrf(request):
+	return JsonResponse({'success':True})
 

@@ -22,6 +22,10 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>{% block title %}{% endblock %}</title>
 	{% block header_import %}{% endblock %}
+	{% csrf_token %}
+	<script>
+		const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+	</script>
 </head>
 <body>
 	<div class="main-container">

@@ -7,4 +7,5 @@ urlpatterns = [
     path('image/<str:file>', views.Media),
     path('profile/media/<str:username>', views.ProfileMedia),
     path('banners/<slug:username>/', views.BannerMedia),
+    path('p/profilephoto', views.get_current_user_profile_photo)
 ]

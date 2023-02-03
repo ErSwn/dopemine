@@ -46,8 +46,8 @@ def get_user(request):
 	if self_origin:
 		user = request.user
 	else:
-		user = User.objects.get(username = 'edua009')
-		
+		user = User.objects.get(username = '123')
+	print(user)
 	return user
 
 @ensure_csrf_cookie
@@ -225,7 +225,7 @@ class TodoView(viewsets.ModelViewSet):
 		if user == '':
 			query_object = Publication.objects.all()
 		else:
-			owner 		 = User.objects.get(username=user)
+			owner 	= User.objects.get(username=user)
 			query_object = Publication.objects.filter(owner=owner)
 			
 		paginator = Paginator(

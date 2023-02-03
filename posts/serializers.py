@@ -1,8 +1,19 @@
 from .models import Publication, PostLike, Comment
 from rest_framework  import serializers
 from accounts.models import UserData
+from django.contrib.auth.models import User
 
-self_origin = True
+def get_user(request):
+    # Disable login requirement for development enviroment
+    # returns '123' user
+    self_origin = True
+
+    if self_origin:
+        user = request.user
+    else:
+        user = User.objects.get(username = '123')
+    print(user)
+    return user
 
 class CommentSerializer(serializers.ModelSerializer):
     username    = serializers.CharField(source='author.username')
@@ -33,7 +44,8 @@ class PublicationSerializer(serializers.ModelSerializer):
         return PostLike.objects.filter(post_id = instance.id ).count()
 
     def get_liked_by_user(self, instance):
-        user = user = self.context['request'].user
+        user = get_user(self.context['request'])
+        # user =  self.context['request'].user
         return PostLike.objects.filter(user=user, post_id = instance).exists()
     
     def get_comment_count(self, instance):
