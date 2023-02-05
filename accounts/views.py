@@ -73,5 +73,3 @@ def checkUsername(request):
 	user = User.objects.filter(username = username)
 	print(user.exists())
 	return JsonResponse({'exists':user.exists()})
-
-

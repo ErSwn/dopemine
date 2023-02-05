@@ -28,7 +28,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', default='foo')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 # DEBUG = int(os.environ.get('DEBUG', default=0))
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '*']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '*',]
 
 
 # Application definition
@@ -156,7 +156,7 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ORIGIN_WHITELIST = [
     'http://localhost:3000', 'http://localhost:8000', 'http://127.0.0.1:8000',
-    'http://127.0.0.1:8000'
+    'http://127.0.0.1:3000','http://192.168.1.103'
 ]
 
 REST_FRAMEWORK = {
@@ -171,17 +171,19 @@ REST_FRAMEWORK = {
 
 }
 
+# CSRF_ORIGINS =
+
 MEDIA_ROOT = 'media/'
 
-CSRF_TRUSTED_ORIGINS = ['http://localhost:3000', 'http://127.0.0.1:8000']
+CSRF_TRUSTED_ORIGINS = ['http://localhost:3000', 'http://127.0.0.1:8000', '*']
 
 CSRF_COOKIE_SECURE = False
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
-
+CSRF_COOKIE_HTTPONLY = True
 """ IMPORTANTE """
 # CSRF_HEADER_NAME = "HTTP_X-CSRFToken"
-CSRF_COOKIE_NAME = "csrftoken"
+# CSRF_COOKIE_NAME = "csrftoken"
 
 CORS_ALLOW_HEADERS = (
     'x-requested-with',
@@ -191,4 +193,6 @@ CORS_ALLOW_HEADERS = (
     'authorization',
     'X-CSRFToken'
     )
+
+DEVELOPMENT = True
 

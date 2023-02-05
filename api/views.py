@@ -33,11 +33,12 @@ from tqdm import tqdm
 from urllib.parse import urlparse
 from datetime import datetime
 
+from dopemine import settings
 
 def get_user(request):
 	# Disable login requirement for development enviroment
 	# returns 'edua009' user
-	self_origin = True
+	self_origin = False
 
 	if self_origin:
 		user = request.user
@@ -131,6 +132,7 @@ class PostApiView(viewsets.ModelViewSet):
 	def get_serializer_class(self):
 		return PublicationSerializer
 	def get_queryset(self):
+		print(self.request)
 		page_size 	= 12
 		page 		= int(self.request.query_params['page'])
 		if self.request.query_params['where'] == 'profile' :
@@ -164,8 +166,10 @@ def checkToken(request):
 
 @csrf_exempt
 def token_security(request):
-	return JsonResponse({'csrfToken': get_token(request)})
-
+	if settings.DEVELOPMENT:
+		return JsonResponse({'csrfToken': get_token(request)})
+	else:
+		return HttpResponseForbidden();
 @csrf_protect
 def checkcsrf(request):
 	return JsonResponse({'success':True})

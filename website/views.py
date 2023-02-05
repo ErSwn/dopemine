@@ -35,19 +35,17 @@ from random import randint
 from tqdm import tqdm
 from urllib.parse import urlparse
 from datetime import datetime
-
+from dopemine import settings
 
 
 def get_user(request):
 	# Disable login requirement for development enviroment
 	# returns 'edua009' user
-	self_origin = True
 
-	if self_origin:
+	if not settings.DEVELOPMENT:
 		user = request.user
 	else:
 		user = User.objects.get(username = '123')
-	print(user)
 	return user
 
 @ensure_csrf_cookie
@@ -102,7 +100,6 @@ def GalleryView(request, username):
 	follow_count = Follow.objects.filter( follow = user ).count()
 	publication_count = Publication.objects.filter(owner = user ).count()
 
-
 	data = {
 		"current_profile":	username,
 		"fullname":			full_name,
@@ -124,7 +121,8 @@ def saved_view(request):
 @require_POST
 @csrf_protect
 def MakeLike(request):
-	data 	= json.loads(request.body.decode('utf-8'))
+	data 	= json.loads(request.body.decode("utf-8"))['body']
+	# print(request.body.decode("utf-8"))
 	post_id = data['id']
 	value 	= data['value']
 	user 	= get_user(request)
@@ -172,6 +170,7 @@ def upload_images(user, images):
 
 @login_required(login_url='accounts/login')
 def CreatePublication(request):
+	print(request.headers)
 	if request.method == 'POST':
 		description = request.POST['description']
 		user 		= request.user
@@ -198,6 +197,7 @@ class CommentView(viewsets.ModelViewSet):
 	def get_serializer_class(self):
 		return CommentSerializer
 	def get_queryset(self):
+		print(self.request)
 		page_size 	= 3
 		post_id 	= int(self.request.query_params['post_id'])
 		page 		= int(self.request.query_params['pagination'])

@@ -2,17 +2,14 @@ from .models import Publication, PostLike, Comment
 from rest_framework  import serializers
 from accounts.models import UserData
 from django.contrib.auth.models import User
+from dopemine import settings
 
 def get_user(request):
-    # Disable login requirement for development enviroment
-    # returns '123' user
-    self_origin = True
 
-    if self_origin:
+    if not settings.DEVELOPMENT:
         user = request.user
     else:
         user = User.objects.get(username = '123')
-    print(user)
     return user
 
 class CommentSerializer(serializers.ModelSerializer):
