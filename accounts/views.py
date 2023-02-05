@@ -41,13 +41,17 @@ def register_user(request):
 		#user registration
 		if User.objects.filter(username = username).exists():
 			return HttpResponse(404)
+
 		user = User.objects.create( username = username, email = email )
 		user.set_password(password)
 		user.save()
 
 		#information_data
-		data = UserData.objects.create(user = user, fullname =fullname )
-		UserMedia.objects.create(user = user )
+		data = UserData.objects.create(user = user, fullname = fullname )
+		usermedia = UserMedia.objects.create(user = user )
+
+		data.save()
+		usermedia.save()
 
 		login(request, user)
 		return redirect('home')

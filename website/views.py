@@ -121,7 +121,7 @@ def saved_view(request):
 @require_POST
 @csrf_protect
 def MakeLike(request):
-	data 	= json.loads(request.body.decode("utf-8"))['body']
+	data 	= json.loads(request.body.decode("utf-8"))['data']
 	# print(request.body.decode("utf-8"))
 	post_id = data['id']
 	value 	= data['value']
