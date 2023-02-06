@@ -18,7 +18,7 @@ body {
 } 
 
 .header{
-	height:60px;
+	height:45px;
 	width: 100%;
 	position: fixed;
 	display:block;
@@ -31,19 +31,25 @@ body {
 
 .navigation-bar{
 	position: fixed;
-	width:222px;
+	width:inherit;
 	background-color:#F5F5F5;
+	background-color:white;
+
 	color: black;
 	margin-top: 50px;
 	font-weight: 600;
 	min-height: 100%;
 	font-size: 18px;
 }
-.navigation-bar .navigation-button{
+.navigation-bar > .navigation-button{
 	margin-left: 30px;
 	margin-top: 30px;
 	/*cursor: pointer;*/
 	padding:2px;
+}
+.navigation-button:hover{
+	margin-left: 35px;
+	transition:0.2s;
 }
 
 .nativation-link{
@@ -58,13 +64,14 @@ body {
 }
 
 .navigation-label{
-	margin-left: 10px;
+	margin-left: 8px;
+
 }
 .right-navigation{
 	width: 250px;
 }
 .left-navigation{
-	min-width: 220px;
+	width: 200px;
 }
 .navigation-bar .navigation-button >p{
 	float: left;
@@ -87,7 +94,8 @@ body {
 	/*background-color:#F5F5F5;*/
 }
 .feed{
-	width: 900px;
+	width: 700px;
+	max-width:700px;
 	padding-top: 60px;
 	/*background-color:#F5F5F5;*/
 }
@@ -155,11 +163,9 @@ body {
 		width: 100%;
 	}
 	#root{
-		padding:2px;
+		padding:0px;
 	}
 }
-
-
 
 .material-symbols-outlined {
 	float: left;
@@ -180,12 +186,12 @@ body {
 
 .header-user{
 
-	padding: 2px;
-	height: 60px;
+	padding: 1px;
+	height: inherit;
 	margin:0;
 	max-width:200px!important;
 	/*background-color: red;*/
-	border: 1px solid rgba(100, 100, 100, 0.5);
+	/*border: 1px solid rgba(100, 100, 100, 0.5);*/
 	border-bottom: none;
 	border-top: none;
 
@@ -194,14 +200,15 @@ body {
 .header-user > div {
 	display: table-cell;
 	float: left;
-	height: 100%;
+	height: inherit;
 
 }
 
 .header-profile-photo-container{
 	float: left;
-	width: 60px;
-	padding: 7px;
+	aspect-ratio:1/1;
+	height:inherit;
+	padding: 2px;
 }
 
 .header-profile-photo{
@@ -223,7 +230,7 @@ body {
 }
 
 .right-navigation{
-	background-color:#F5F5F5;
+	/*background-color:#F5F5F5;*/
 	padding-top: 70px;
 	width: 200px !important;
 }
