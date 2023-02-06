@@ -1,8 +1,8 @@
 {% extends 'views/profile_base.html' %}
 {% load static %}
 {% block header_import %}
-<script defer="defer" src="{% static 'js/build/static/js/app.js'%}"></script>
-<link href="{% static 'js/build/static/css/app.css' %}" rel="stylesheet">
-<link href="{% static 'css/profile.css' %}" rel="stylesheet">
+<script defer="defer" src="{% static 'js/build/static/js/app.js'%}?{% now 'U' %}"></script>
+<link href="{% static 'js/build/static/css/app.css' %}?{% now 'U' %}" rel="stylesheet">
+<link href="{% static 'css/profile.css' %}?{% now 'U' %}" rel="stylesheet">
 
 {% endblock %}

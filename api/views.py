@@ -165,11 +165,10 @@ def checkToken(request):
 	return JsonResponse({'success':True})
 
 @csrf_exempt
+@ensure_csrf_cookie
 def token_security(request):
-	if settings.DEVELOPMENT:
-		return JsonResponse({'csrfToken': get_token(request)})
-	else:
-		return JsonResponse({'csrfToken': get_token(request)})
+	return JsonResponse({'csrftoken': get_token(request)})
+
 @csrf_protect
 def checkcsrf(request):
 	return JsonResponse({'success':True})

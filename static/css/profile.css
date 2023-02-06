@@ -14,11 +14,11 @@
 
 .header-photo{
 	aspect-ratio: 1 / 1;
-	width: 15%;
+	width: 14%;
 	background-color:transparent;
 	position: absolute;
 	left: 10px;
-	bottom: -18%;
+	bottom: -12%;
 	border-radius:50%;
 }
 

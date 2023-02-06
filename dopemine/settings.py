@@ -175,7 +175,7 @@ REST_FRAMEWORK = {
 
 MEDIA_ROOT = 'media/'
 
-CSRF_TRUSTED_ORIGINS = ['http://localhost:3000', 'http://127.0.0.1:8000', '*']
+CSRF_TRUSTED_ORIGINS = ['http://localhost:3000', 'http://127.0.0.1:3000','http://127.0.0.1:8000' ]
 
 CSRF_COOKIE_SECURE = False
 CORS_ORIGIN_ALLOW_ALL = True

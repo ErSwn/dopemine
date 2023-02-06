@@ -87,7 +87,7 @@ body {
 	/*background-color:#F5F5F5;*/
 }
 .feed{
-	width: 700px;
+	width: 900px;
 	padding-top: 60px;
 	/*background-color:#F5F5F5;*/
 }
@@ -116,6 +116,10 @@ body {
 	.feed{
 		margin-right: 0;
 		width: 100%;
+	}
+	.main-content{
+		width:100vw;
+		margin:0;
 	}
 	.right-navigation{
 		width: 0;
@@ -275,6 +279,7 @@ body {
 	/*position: absolute;*/
 	bottom:0;
 	right:10%;
+	margin-right:10px;
 	float:right;
 	background-color:#4392F1;
 	background-color:black;
