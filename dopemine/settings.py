@@ -52,7 +52,8 @@ INSTALLED_APPS = [
     'website',
     'posts',
     'relations',
-    'MediaManager'
+    'MediaManager',
+    'groups'
 ]
 
 

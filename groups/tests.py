@@ -1,3 +1,9 @@
 from django.test import TestCase
+from .models import Group, Member
+import uuid
 
-# Create your tests here.
+class GroupCreation(TestCase):
+	def
+
+class GroupMember(TestCase):
+

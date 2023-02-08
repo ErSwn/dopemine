@@ -185,7 +185,6 @@ body {
 }
 
 .header-user{
-
 	padding: 1px;
 	height: inherit;
 	margin:0;
@@ -194,8 +193,6 @@ body {
 	/*border: 1px solid rgba(100, 100, 100, 0.5);*/
 	border-bottom: none;
 	border-top: none;
-
-
 }
 .header-user > div {
 	display: table-cell;
@@ -268,8 +265,6 @@ body {
 	width: 100%;
 	font-size:24px;
 	padding:5px;
-	/*border: 1px solid rgba(0,0,0,0.1);*/
-
 }
 
 .publicate-input:focus{
@@ -277,13 +272,9 @@ body {
 
 }
 .publicate-media-input{
-	/*position:relative;*/
-	/*bottom:0;*/
 	background-color:white;
-	/*height:calc(100% - 100px);*/
 }
 .submit-button{
-	/*position: absolute;*/
 	bottom:0;
 	right:10%;
 	margin-right:10px;
@@ -295,16 +286,13 @@ body {
 	border:none;
 	border-radius:17px;
 	padding:4px 15px;
-	/*font-weight:300;*/
 	font:600 16px/24px Google Sans,-apple-system,BlinkMacSystemFont,sans-serif;
 }
 
 .file-drop-area{
-	/*background-color:red;*/
 	position: relative;
 	display: flex;
 	align-items: center;
-	/*width: 450px;*/
 	max-width: 100%;
 	padding:25px;
 	border: 1px dashed rgba(255,255,255,0.4);
@@ -314,8 +302,6 @@ body {
 
 .choose-file-button{
 	flex-shrink: 0;
-	/*background-color: rgba(255,255,255,0.04);*/
-	/*border:1px solid rgba(255,255,255,0.1);*/
 	border-radius: 3px;
 	padding:10px;
 	margin-right: 10px;
@@ -342,7 +328,6 @@ body {
 	widows: 100%;
 	cursor: pointer;
 	opacity: 0;
-	/*background-color:red;*/
 
 }
 .previewImage{

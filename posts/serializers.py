@@ -33,7 +33,7 @@ class PublicationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Publication
         fields = ('username', 'full_name','id', 'content', 'date_of_publication', 'media', 'like_count', 'liked_by_user', 'comment_count')
-    
+
     def get_full_name(self, instance):
         return UserData.objects.get(user=instance.owner).fullname
 

@@ -10,51 +10,46 @@
 <script>
   // image selection functionallty
   $(document).on('change', '.file-input', function() {
-
-
       var filesCount = $(this)[0].files.length;
-
       var textbox = $(this).prev();
 
       if (filesCount === 1) {
-      var fileName = $(this).val().split('\\').pop();
-      textbox.text(fileName);
+        var fileName = $(this).val().split('\\').pop();
+        textbox.text(fileName);
       } else {
-      textbox.text(filesCount + ' files selected');
+        textbox.text(filesCount + ' files selected');
       }
-
-
 
       if (typeof (FileReader) != "undefined") {
         var dvPreview = $("#divImageMediaPreview");
         dvPreview.html("");            
         $($(this)[0].files).each(function () {
-            var file = $(this);                
-                var reader = new FileReader();
-                reader.onload = function (e) {
+          var file = $(this);                
+          var reader = new FileReader();
+          reader.onload = function (e) {
 
-                    var img = $("<img />");
-                    var t=$("<div class = 'previewImage'/>");
+            var img = $("<img />");
+            var t=$("<div class = 'previewImage'/>");
 
-                    img.attr("style", "width: 100px; height:100px; object-fit: cover");
-                    img.attr("src", e.target.result);
+            img.attr("style", "width: 100px; height:100px; object-fit: cover");
+            img.attr("src", e.target.result);
 
-                    
-                    t.append(img)
-                    dvPreview.append(t);
-                }
+            
+            t.append(img)
+            dvPreview.append(t);
+          }
 
-                reader.readAsDataURL(file[0]);                
+          reader.readAsDataURL(file[0]);                
         });
-    } else {
+      } else {
         alert("This browser does not support HTML5 FileReader.");
-    }
+      }
 
 
-      });
+    });
 
-</script>
-{% endblock %}
+  </script>
+  {% endblock %}
 
 {% block feed %}
     <!-- -->

@@ -56,14 +56,14 @@ def ProfileView(request, profile):
 		user 			 = User.objects.get(username=profile)
 	except:
 		return redirect('home')
-	user_data = UserData.objects.get(user = user)
+	user_data = UserData.objects.get(user=user)
 
 	full_name 		 = user_data.fullname
 	user_description = user_data.description
 	profile_username = user.username
 
-	follow_count = Follow.objects.filter( follow = user ).count()
-	publication_count = Publication.objects.filter(owner = user ).count()
+	follow_count = Follow.objects.filter(follow=user).count()
+	publication_count = Publication.objects.filter(owner=user).count()
 
 	data = {
 		"current_profile":	profile,
@@ -91,14 +91,14 @@ def home_page(request):
 @ratelimit(key='ip', rate='100/m')
 def GalleryView(request, username):
 	user 			 = User.objects.get(username=username)
-	user_data = UserData.objects.get(user = user)
+	user_data = UserData.objects.get(user=user)
 
 	full_name 		 = user_data.fullname
 	user_description = user_data.description
 	profile_username = user.username
 
-	follow_count = Follow.objects.filter( follow = user ).count()
-	publication_count = Publication.objects.filter(owner = user ).count()
+	follow_count = Follow.objects.filter(follow=user).count()
+	publication_count = Publication.objects.filter(owner=user).count()
 
 	data = {
 		"current_profile":	username,
@@ -122,13 +122,12 @@ def saved_view(request):
 @csrf_protect
 def MakeLike(request):
 	data 	= json.loads(request.body.decode("utf-8"))['data']
-	# print(request.body.decode("utf-8"))
 	post_id = data['id']
 	value 	= data['value']
 	user 	= get_user(request)
 
 	if not value:
-		PostLike.objects.filter(user = user, post_id = post_id).delete()
+		PostLike.objects.filter(user=user, post_id=post_id).delete()
 	else:
 		post = Publication.objects.get(id=post_id)
 		PostLike.objects.update_or_create(user=user, post_id=post)
@@ -142,9 +141,9 @@ def PostComment(request):
 	post_id = data['post_id']
 	content = data['content']
 	user 	= get_user(request)
-	post 	= Publication.objects.get(id = post_id)
+	post 	= Publication.objects.get(id=post_id)
 
-	Comment.objects.create(author=user, post_id=post, content =  content)
+	Comment.objects.create(author=user, post_id=post, content=content)
 
 	return HttpResponse(True)
 
@@ -182,7 +181,7 @@ def CreatePublication(request):
 @require_POST
 @login_required(login_url='accounts/login')
 def DeletePublication(request):
-	Publication.objects.filter(id=request.POST['id'],  owner = request.user).delete()	
+	Publication.objects.filter(id=request.POST['id'],  owner=request.user).delete()	
 	return redirect('home')
 
 @require_POST

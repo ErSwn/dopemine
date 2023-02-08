@@ -1,3 +1,8 @@
 from django.shortcuts import render
+from .serializers import GroupSerializer, MembersSerializer
 
-# Create your views here.
+def createGroup(request):
+	
+
+def deleteGroup(request):
+	pass
