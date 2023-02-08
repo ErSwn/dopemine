@@ -19,7 +19,7 @@ class Publication(models.Model):
     indexes = [models.Index(fields = ['owner', 'id'])]
   
   def __str__(self):
-    return f'{owner} - {date_of_publication} - {id}'
+    return f'{self.owner} - {self.date_of_publication} - {id}'
 
 
 class PostLike(models.Model):
@@ -31,7 +31,7 @@ class PostLike(models.Model):
     indexes = [models.Index(fields = ['user', 'post_id'])]
 
   def __str__(self):
-    return f'{user} - {post_id}'
+    return f'{self.user} - {self.post_id}'
 
 class Comment(models.Model):
   id     = models.AutoField( primary_key=True )
@@ -44,7 +44,7 @@ class Comment(models.Model):
     indexes = [models.Index(fields=['post_id', 'author', 'id'])]
 
   def __str__(self):
-    return f'{author} - {date} - {post_id}'
+    return f'{self.author} - {self.date} - {self.post_id}'
 
 class CommentLike(models.Model):
   user   = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -56,7 +56,7 @@ class CommentLike(models.Model):
     indexes = [models.Index(fields = ['user', 'post_id'])]
   
   def __str__(self):
-    return f'{user} - {post_id}'
+    return f'{self.user} - {self.post_id}'
 
 class Bookmark(models.Model):
   user = models.ForeignKey(User ,on_delete=models.CASCADE)

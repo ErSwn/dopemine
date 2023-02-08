@@ -1,4 +1,4 @@
-from .models import Publication, PostLike, Comment
+from .models import Publication, PostLike, Comment, Bookmark
 from rest_framework  import serializers
 from accounts.models import UserData
 from django.contrib.auth.models import User
@@ -29,10 +29,20 @@ class PublicationSerializer(serializers.ModelSerializer):
     like_count 		= serializers.SerializerMethodField()
     liked_by_user 	= serializers.SerializerMethodField()
     comment_count 	= serializers.SerializerMethodField()
+    bookmark        = serializers.SerializerMethodField()
 
     class Meta:
         model = Publication
-        fields = ('username', 'full_name','id', 'content', 'date_of_publication', 'media', 'like_count', 'liked_by_user', 'comment_count')
+        fields = ('username', 
+                'full_name',
+                'id',
+                'content',
+                'date_of_publication',
+                'media',
+                'like_count',
+                'liked_by_user',
+                'comment_count',
+                'bookmark')
 
     def get_full_name(self, instance):
         return UserData.objects.get(user=instance.owner).fullname
@@ -48,3 +58,7 @@ class PublicationSerializer(serializers.ModelSerializer):
     def get_comment_count(self, instance):
         return Comment.objects.filter(post_id = instance.id ).count()
 
+    def get_bookmark(self, instance):
+        user = get_user(self.context['request'])
+        print(Bookmark.objects.filter(user = user, post = instance).exists())
+        return Bookmark.objects.filter(user = user, post = instance).exists()

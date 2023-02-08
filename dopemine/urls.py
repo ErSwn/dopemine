@@ -22,5 +22,6 @@ urlpatterns = [
     path('accounts/', include('accounts.urls')),
     path('', include('website.urls')),
     path('', include('api.urls')),
-    path('', include('MediaManager.urls'))
+    path('', include('MediaManager.urls')),
+    path('', include('posts.urls'))
 ]
