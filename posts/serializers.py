@@ -52,7 +52,6 @@ class PublicationSerializer(serializers.ModelSerializer):
 
     def get_liked_by_user(self, instance):
         user = get_user(self.context['request'])
-        # user =  self.context['request'].user
         return PostLike.objects.filter(user=user, post_id = instance).exists()
     
     def get_comment_count(self, instance):

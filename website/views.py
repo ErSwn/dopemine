@@ -119,7 +119,6 @@ def saved_view(request):
 """ web posts """
 
 @require_POST
-@csrf_protect
 def MakeLike(request):
 	data 	= json.loads(request.body.decode("utf-8"))['data']
 	post_id = data['id']
@@ -135,7 +134,6 @@ def MakeLike(request):
 	return HttpResponse(True)
 
 @require_POST
-@csrf_exempt
 def PostComment(request):
 	data 	= json.loads(request.body.decode('utf-8'))['data']
 	post_id = data['post_id']
@@ -217,7 +215,7 @@ class TodoView(viewsets.ModelViewSet):
 		return TodoSerializer
 	def get_queryset(self):
 		page 		= int(self.request.query_params['pagination'])
-		page_size 	= 12
+		page_size 	= 8
 		origin 		= self.request.META['HTTP_REFERER']
 		user 		= urlparse(origin).path.split('/')[1]
 

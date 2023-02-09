@@ -6,6 +6,7 @@ from rest_framework.authtoken.views import obtain_auth_token
 
 router = routers.DefaultRouter()
 router.register(r'users', views.PublicationView, 'posts')
+router.register(r'feed', views.HomeView, 'feed')
 
 urlpatterns = [
     path('posts/bookmark/', views.setBookmark),

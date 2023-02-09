@@ -31,8 +31,6 @@ def setBookmark(request):
 	if not user.is_authenticated:
 		return Http404('You need to be authenticated')
 
-	# if not post.exists():
-	# 	return Http404('Post do not exist')
 	if value:
 		bookmark = Bookmark.objects.create(user=user, post=post)
 		bookmark.save()
@@ -42,19 +40,24 @@ def setBookmark(request):
 
 	return HttpResponse(True)
 
-def getPostsFromUser(request):
-	data = request.GET
-	page = int(data.get('page'))
-	username = data.get('user')
-	user = User.objects.filter(username = username)
-	pageSize = 12
-	if user.exists():
-		return Http404()
+class HomeView(viewsets.ModelViewSet):
+	def get_serializer_class(self):
+		return PublicationSerializer
+	def get_queryset(self):
+		data = self.request.GET
+		page = int(data.get('page'))
+		page_size = 12
 
-	userPublications = Publication.objects.filter(user = user )
-	paginator = Paginator(userPublications.order_by('-id'), page_size)
+		publications = Publication.objects.all()
+		paginator = Paginator(publications.order_by('-id'), page_size)
 
-	return Http
+		if not publications.exists():
+			return []
+
+		if page >= paginator.num_pages:
+			return []
+
+		return paginator.page(page+1)
 
 class PublicationView(viewsets.ModelViewSet):
 	def get_serializer_class(self):
