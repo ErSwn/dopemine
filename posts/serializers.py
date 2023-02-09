@@ -60,5 +60,4 @@ class PublicationSerializer(serializers.ModelSerializer):
 
     def get_bookmark(self, instance):
         user = get_user(self.context['request'])
-        print(Bookmark.objects.filter(user = user, post = instance).exists())
         return Bookmark.objects.filter(user = user, post = instance).exists()

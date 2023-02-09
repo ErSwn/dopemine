@@ -195,5 +195,5 @@ CORS_ALLOW_HEADERS = (
     'X-CSRFToken'
     )
 
-DEVELOPMENT = False
+DEVELOPMENT = True
 
