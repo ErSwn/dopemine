@@ -9,8 +9,15 @@ from rest_framework import viewsets
 
 from .serializers import PublicationSerializer
 from .models import Bookmark, Publication
+from MediaManager.models import Image
 from dopemine import settings
+
 import json
+import numpy as np
+import random
+import string
+from datetime import datetime
+import uuid
 
 def get_user(request):
 	user = request.user
@@ -25,6 +32,7 @@ def setBookmark(request):
 	data = json.loads(request.body.decode('utf-8'))['data']
 	user = get_user(request)
 	postId = data.get('id')
+	print(postId)
 	post = Publication.objects.get(id=postId)
 	value = data.get('value')
 
@@ -59,6 +67,39 @@ class HomeView(viewsets.ModelViewSet):
 
 		return paginator.page(page+1)
 
+def upload_images(user, images):
+	keys = []
+	N = 7
+	for index, im in enumerate(images):
+		#creates UUID name
+		print(im)
+		key = str(uuid.uuid4())
+		# sets UUID name to file
+		extension 	= im._name.split('.')[-1]
+		new_name 	= key+'.' +extension
+		im._name 	= new_name
+
+		# store file
+		Image.objects.create(identifier=key, image = im)
+		keys.append(key)
+	return keys
+
+def CreatePublication(request):
+	if request.method == 'POST':
+		description = request.POST['description']
+		user 		= request.user
+		keys 		= upload_images(request.user, request.FILES.getlist('file'))
+		media 		= {str(i):key for i, key in enumerate(keys)}
+		publication = Publication.objects.create( owner = user, content=description, media=media )
+	return redirect('home')
+
+@require_POST
+def makePublication(request):
+	upload_images('edua009', dict(request.FILES).get('images'))
+	# print(request.body.decode('utf-8'))
+
+	return HttpResponse(1)
+
 class PublicationView(viewsets.ModelViewSet):
 	def get_serializer_class(self):
 		return PublicationSerializer
@@ -80,3 +121,4 @@ class PublicationView(viewsets.ModelViewSet):
 			return []
 
 		return paginator.page(page+1)
+

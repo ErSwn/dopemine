@@ -10,5 +10,6 @@ router.register(r'feed', views.HomeView, 'feed')
 
 urlpatterns = [
     path('posts/bookmark/', views.setBookmark),
+    path('posts/make', views.makePublication),
     path('posts/', include(router.urls)),
 ]

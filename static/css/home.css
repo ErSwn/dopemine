@@ -79,7 +79,6 @@ body {
 .navigation-bar .navigation-button >p{
 	float: left;
 	padding: 10px;
-
 }
 .navigation-bar .navigation-button >span{
 	float: left;
@@ -87,7 +86,6 @@ body {
 .root{
 	display: block;
 	/*width:  623px;*/
-
 	width: 100%;
 	max-width:100%;
 	height: auto !important;
