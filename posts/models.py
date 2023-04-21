@@ -34,11 +34,11 @@ class PostLike(models.Model):
     return f'{self.user} - {self.post_id}'
 
 class Comment(models.Model):
-  id     = models.AutoField( primary_key=True )
+  id      = models.AutoField( primary_key=True )
   post_id = models.ForeignKey( Publication, on_delete=models.CASCADE )
-  author   = models.ForeignKey(User, on_delete=models.CASCADE)
+  author  = models.ForeignKey(User, on_delete=models.CASCADE)
   content = models.CharField( max_length=3000 )
-  date   = models.DateTimeField( auto_now_add=True)
+  date    = models.DateTimeField( auto_now_add=True)
 
   class Meta:
     indexes = [models.Index(fields=['post_id', 'author', 'id'])]
